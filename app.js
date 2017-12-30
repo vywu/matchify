@@ -8,6 +8,7 @@ const querystring=require('querystring');
 const cookieParser=require('cookie-parser');
 const http=require('http');
 const fs=require('fs');
+
 // const cookieParser = require('cookie-parser');
 // const bodyParser = require('body-parser');
 // const cors = require('cors');
@@ -18,7 +19,7 @@ const fs=require('fs');
 // const paths = require('./routes/path');
 // // const userRoutes=require('./routes/user');
 //
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 //
 //
 //
@@ -45,6 +46,7 @@ var generateRandomString = function(length) {
   return text;
 };
 
+
 const client_id="990908af7650443799342f406c37de12";
 const client_secret="a4486f82c3174d3bb9c66fa4cf910c3d";
 var redirect_uri="http://localhost:3000/callback";
@@ -53,6 +55,8 @@ var state_key="spotify_auth_state";
 //---------------------------------------------------------------
 //Creating the express app
 const app = express();
+const server=http.Server(app);
+const io=require('socket.io')(server);
 const router=express.Router();
 
 // //BodyParser middleware
@@ -75,6 +79,29 @@ app.use(function (req, res, next) {
 });
 app.get('/',function(req,res){
   res.sendFile('index.html');
+});
+var count=0;
+var sockets={};
+io.on('connection',function(socket){
+  var id=generateRandomString(4);
+  socket.emit('sendId',{id:id});
+  socket.on('sendEmail',function(data){
+    console.log(data);
+    sockets[data.email]=id;
+    console.log(sockets);
+  });
+  socket.on('subscribe',function(data){
+    console.log(data);
+
+    socket.join(data.subscribeeid,()=>{
+      let rooms=Object.keys(socket.rooms);
+      console.log(rooms);
+    });
+
+  });
+
+  // console.log(socket.handshake);
+  count++;
 });
 
 router.get('/login',function(req,res){
@@ -118,6 +145,7 @@ router.get('/callback',function(req,res){
         var access_token=body.access_token,
           refresh_token=body.refresh_token;
         at=access_token;
+        //pass the parameters through the URL
         res.redirect('/#' +
           querystring.stringify({
             access_token: access_token,
@@ -153,9 +181,15 @@ router.get('/refresh_token',function(req,res){
 
 app.use('/',router);
 const port = 3000;
-
-app.listen(process.env.PORT||port,function() {
+// Original connection
+server.listen(process.env.PORT||port,function() {
   console.log('Server started on port ' + port);
 });
 
+//Using Socket.io+Express
+// var io=require('socket.io').listen(app.listen(process.env.PORT||port));
+// io.sockets.on('connection',function(socket){
+//   // socket.emit('message',{message:"WELCOME"})
+//   console.log(socket);
+// });
 module.exports=app;
