@@ -68,7 +68,7 @@ const router=express.Router();
 //
 // //Set static folder: now the browser will automatically search here for static files such as html pages, image files and
 // // css scripts.
-app.use(express.static(path.join(__dirname, "/src/")));
+app.use(express.static(path.join(__dirname, "/dist/")));
 app.use(cookieParser());
 
 app.use(function (req, res, next) {
@@ -83,6 +83,7 @@ app.get('/',function(req,res){
 var count=0;
 var sockets={};
 io.on('connection',function(socket){
+  console.log("CONNECTION CREATED");
   var id=generateRandomString(4);
   socket.emit('sendId',{id:id});
   socket.on('sendEmail',function(data){
@@ -92,10 +93,10 @@ io.on('connection',function(socket){
   });
   socket.on('subscribe',function(data){
     console.log(data);
-
     socket.join(data.subscribeeid,()=>{
       let rooms=Object.keys(socket.rooms);
       console.log(rooms);
+      console.log(socket.rooms);
     });
 
   });
@@ -117,14 +118,53 @@ router.get('/login',function(req,res){
     }));
 });
 
+// router.get('/callback',function(req,res){
+//   var code=req.query.code||null;
+//   var state=req.query.state||null;
+//   var storedState=req.cookies?req.cookies[state_key]:null;
+//   if(state===null||state!=storedState){
+//     res.redirect('/#'+querystring.stringify({
+//         error:'state_mismatch'
+//       }));
+//   }else{
+//     res.clearCookie(state_key);
+//     var authOptions = {
+//       url: 'https://accounts.spotify.com/api/token',
+//       form: {
+//         code: code,
+//         redirect_uri: redirect_uri,
+//         grant_type: 'authorization_code'
+//       },
+//       headers: {
+//         'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+//       },
+//       json: true
+//     };
+//
+//     request.post(authOptions,function(error,response,body){
+//       if(!error&&response.statusCode===200){
+//         var access_token=body.access_token,
+//           refresh_token=body.refresh_token;
+//         at=access_token;
+//         //pass the parameters through the URL
+//         res.redirect('/#' +
+//           querystring.stringify({
+//             access_token: access_token,
+//             refresh_token: refresh_token
+//           }));
+//       }else{
+//         res.redirect('/#'+querystring.stringify({error:'invalid_token'}));
+//       }
+//     });
+//   }
+// });
+
 router.get('/callback',function(req,res){
   var code=req.query.code||null;
   var state=req.query.state||null;
   var storedState=req.cookies?req.cookies[state_key]:null;
   if(state===null||state!=storedState){
-    res.redirect('/#'+querystring.stringify({
-        error:'state_mismatch'
-      }));
+
   }else{
     res.clearCookie(state_key);
     var authOptions = {
@@ -146,13 +186,13 @@ router.get('/callback',function(req,res){
           refresh_token=body.refresh_token;
         at=access_token;
         //pass the parameters through the URL
-        res.redirect('/#' +
+        res.redirect('/?' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
           }));
       }else{
-        res.redirect('/#'+querystring.stringify({error:'invalid_token'}));
+        res.redirect('/?'+querystring.stringify({error:'invalid_token'}));
       }
     });
   }
