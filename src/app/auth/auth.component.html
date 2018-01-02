@@ -1,6 +1,4 @@
-<h1>Matchify</h1>
-<a href="/login">Login</a>
-<script>
-
-</script>
+<h1 *ngIf="!isLoggedIn()">Matchify</h1>
+<a href="/login" *ngIf="!isLoggedIn()">Login</a>
+<h1 *ngIf="hasRetrievedName()">{{greet()}}</h1>
 

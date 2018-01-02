@@ -86,19 +86,29 @@ io.on('connection',function(socket){
   console.log("CONNECTION CREATED");
   var id=generateRandomString(4);
   socket.emit('sendId',{id:id});
-  socket.on('sendEmail',function(data){
-    console.log(data);
-    sockets[data.email]=id;
-    console.log(sockets);
-  });
+  sockets[id]=socket;
+  console.log("********************************************************************");
+  console.log(sockets[id]);
+  console.log("********************************************************************");
+  //handle subscription
   socket.on('subscribe',function(data){
-    console.log(data);
-    socket.join(data.subscribeeid,()=>{
-      let rooms=Object.keys(socket.rooms);
+    console.log("TRYING TO SUBSCRIBE TO "+ data);
+    //the socket that's being subscribed to
+    console.log(data.subscriberid+"is subscribing to"+data.subscribeeid);
+    console.log(typeof data.subscribeeid);
+    otherSocket=sockets[data.subscribeeid];
+    //if the target socket doesn't exist
+    if(typeof otherSocket=='undefined')
+      socket.emit('subscribeerror',{error:"The user isn't connected"});
+    else {
+      //notify the socket its new subscriber
+      otherSocket.emit('notifysubscription', {subscriberid: data.subscriberid});
+      socket.join(data.subscribeeid, function(){
+        const rooms = Object.keys(socket.rooms);
       console.log(rooms);
       console.log(socket.rooms);
     });
-
+    }
   });
 
   // console.log(socket.handshake);

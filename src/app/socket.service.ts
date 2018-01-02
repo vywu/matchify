@@ -23,8 +23,9 @@ export class SocketService {
   getClientid(){
     return this.clientid;
   }
-  suscribeToUser(subid){
-    this.socket.emit("subscribe",{subscriberid:this.clientid,subscribeeid:subid});
-  }
+
+  // suscribeToUser(subid){
+  //   this.socket.emit("subscribe",{subscriberid:this.clientid,subscribeeid:subid});
+  // }
 
 }
