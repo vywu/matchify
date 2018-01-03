@@ -1,8 +1,14 @@
+<div *ngIf="!isLoggedIn()">
+  <h1 class="title">Matchify</h1>
+  <h2>Login using your spotify account, obtain a unique code and share your music with others!</h2>
+  <a class='login' href="/login">Login</a>
+</div>
 
-<h1 *ngIf="!isLoggedIn()">Matchify</h1>
-<a class='login' href="/login" *ngIf="!isLoggedIn()">Login</a>
 <div *ngIf="hasRetrievedName()">
 <h1>Welcome {{getUsername()}}</h1>
-<h2>Your Unique Code Is {{getId()}}</h2>
+  <h2>Your Unique Code Is <h2 class="code">{{getId()}}</h2></h2>
+  <h2>To let your friends listen with you, share your code with them and start playing your favourite music.</h2>
+  <h2>To listen with your friend, enter their code below.</h2>
+
 </div>
 

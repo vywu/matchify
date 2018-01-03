@@ -1,4 +1,5 @@
-html,body{margin:0;padding:0;height:100%;width:100%;
+html,body{
+  /*margin:0;padding:0;height:100%;width:100%;*/
   background: #dd5e89; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #dd5e89, #f7bb97); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #dd5e89, #f7bb97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  }
@@ -7,22 +8,42 @@ html,body{margin:0;padding:0;height:100%;width:100%;
   src:url("/assets/Montserrat-Regular.otf") format("opentype");
 
 }
-link{
+a:visited{
+  color:whitesmoke;
+}
+a,button{
+  text-decoration: none;
+  color:whitesmoke;
   background-color:Transparent;
   background-repeat: no-repeat;
   font-size:17px;
   padding:10px;
-  border:0px solid transparent;
+  border:3px solid transparent;
   font-family:Montserrat;
-
 }
-link:hover{
+button{
+  text-decoration: none;
+  color:whitesmoke;
+  background-color:Transparent;
+  background-repeat: no-repeat;
+  font-size:17px;
+  padding:10px;
+  border:3px solid whitesmoke;
+  font-family:Montserrat;
+  border-radius:
+}
+a:hover,button:hover{
   transform:scale(1.3,1.3);
   -webkit-transform:scale(1.3,1.3);
   -moz-transform:scale(1.3,1.3);
 }
-link:focus{
+a:active,button:focus{
   outline:0 !important;
   color:#f7bb97;
   filter:brightness(150%);
+}
+.maincomponents{
+  margin: 0 auto;
+  max-width: 1920px;
+  padding: 50px;
 }

@@ -1,11 +1,11 @@
-html,body{
-  overflow:hidden;
-}
+/*html,body{*/
+  /*overflow:hidden;*/
+/*}*/
 .login{
-  position:relative;
-  width:100%;
-  left:2%;
-  right:0;
+  /*position:relative;*/
+  /*width:100%;*/
+  /*left:2%;*/
+  /*right:0;*/
   background-color:Transparent;
   background-repeat: no-repeat;
   border:3px solid whitesmoke;
@@ -22,6 +22,12 @@ html,body{
 .login:hover{
   background-color:whitesmoke;
   color: #dd5e89;
+}
+.title{
+  font-size:100px;
+}
+.code{
+  text-decoration: underline;
 }
 h1,h2{
   color:whitesmoke;

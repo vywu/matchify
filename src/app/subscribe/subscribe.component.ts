@@ -11,9 +11,13 @@ import { SpotifyService } from '../spotify.service';
 export class SubscribeComponent implements OnInit {
  socket;
  myId: string;
+ subscribeeId:string;
  subscribers:string[];
  playlistid:string;
  public subscribed:boolean=false;
+ public subscribing:boolean=false;
+
+
   constructor(private socketService:SocketService, private spotifyService: SpotifyService) {
   }
 
@@ -38,6 +42,8 @@ export class SubscribeComponent implements OnInit {
 
   subscribe(id){
     console.log("subscribe to "+id.value);
+    this.subscribeeId=id.value;
+    this.subscribing=true;
     this.spotifyService.createPlaylist("Listening with "+id.value).subscribe(data=>this.playlistid=data.id);
     this.socket.emit('subscribe',{subscriberid:this.myId,subscribeeid:id.value});
     const receiverObservable=new Observable(observer=>{
@@ -105,6 +111,14 @@ export class SubscribeComponent implements OnInit {
 
   endSubscription(){
     console.log("end subscription");
+  }
+
+  getSubscribingStatus(){
+    return this.subscribing;
+  }
+
+  getSubscribeeId(){
+    return this.subscribeeId;
   }
 
 
