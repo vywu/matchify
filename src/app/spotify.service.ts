@@ -22,6 +22,7 @@ export class SpotifyService {
   }
 
   getCurrentTrack(){
+    console.log("FROM SPOTIFY SERVICE. GET CURRENT TRACK CALLED");
     return this.http.get(this.apiUrl+'/player/currently-playing',{headers:this.headers}).map((response:Response)=>response.json());
   }
 

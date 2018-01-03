@@ -11,11 +11,13 @@ import { Injector } from '@angular/core';
 import { setAppInjector } from './app.injector';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 import { FormsModule } from '@angular/forms';
+import { PlayearComponent } from './playear/playear.component';
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    SubscribeComponent
+    SubscribeComponent,
+    PlayearComponent
   ],
   imports: [
     BrowserModule, routing,HttpModule],

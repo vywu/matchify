@@ -118,7 +118,7 @@ io.on('connection',function(socket){
 router.get('/login',function(req,res){
   var state=generateRandomString(16);
   res.cookie(state_key,state);
-  var scope= 'user-read-private user-read-email user-read-recently-played playlist-read-collaborative playlist-modify-public playlist-modify-private ugc-image-upload user-follow-read user-library-read user-read-private user-top-read streaming user-read-currently-playing user-modify-playback-state user-read-playback-state';
+  var scope= 'user-read-private user-read-email user-read-recently-played playlist-read-collaborative playlist-modify-public playlist-modify-private ugc-image-upload user-follow-read user-library-read user-read-private user-top-read streaming user-read-currently-playing user-modify-playback-state user-read-playback-state streaming user-read-birthdate user-read-email user-read-private';
   res.redirect('https://accounts.spotify.com/authorize?'+querystring.stringify({
       response_type:'code',
       client_id:client_id,
