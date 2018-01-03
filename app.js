@@ -47,9 +47,9 @@ var generateRandomString = function(length) {
 };
 
 
-const client_id="990908af7650443799342f406c37de12";
-const client_secret="a4486f82c3174d3bb9c66fa4cf910c3d";
-var redirect_uri="http://localhost:3000/callback";
+const client_id="1a627b7dad7545a9996ec91d8f0b54bc";
+const client_secret="99d07c94219242faa73c88fec207a5b3";
+var redirect_uri="https://matchify-.herokuapp.com/callback";
 var state_key="spotify_auth_state";
 
 //---------------------------------------------------------------
