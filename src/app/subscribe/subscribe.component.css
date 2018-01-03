@@ -1,0 +1,45 @@
+button{
+  background-color:Transparent;
+  background-repeat: no-repeat;
+  border:3px solid whitesmoke;
+  border-radius:25px;
+  font-size:17px;
+  padding:10px;
+  font-family:Montserrat;
+}
+
+
+input[type=text]:focus {
+  border: 5px solid whitesmoke;
+}
+
+input[type=text]{
+  color:whitesmoke;
+  text-align: center;
+  font-size:35px;
+  background-color: Transparent;
+  border:3px solid whitesmoke;
+  width:10%;
+  height:50px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  font-family:Montserrat;
+}
+h3
+{
+  color:whitesmoke;
+  margin-bottom:30px;
+  font-family: Montserrat;
+  -webkit-animation: fadein 10s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2s; /* Firefox < 16 */
+  -ms-animation: fadein 2s; /* Internet Explorer */
+  -o-animation: fadein 2s; /* Opera < 12.1 */
+  animation: fadein 2s;
+}
+td{
+  border:2px solid darkgray
+}
+table {
+  border-collapse:collapse;
+}
