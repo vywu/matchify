@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+html,body{margin:0;padding:0;height:100%;width:100%;
+  background: #dd5e89; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #dd5e89, #f7bb97); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #dd5e89, #f7bb97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  }
+@font-face{
+  font-family: Montserrat;
+  src:url("/assets/Montserrat-Regular.otf") format("opentype");
+
+}
+link{
+  background-color:Transparent;
+  background-repeat: no-repeat;
+  font-size:17px;
+  padding:10px;
+  border:0px solid transparent;
+  font-family:Montserrat;
+
+}
+link:hover{
+  transform:scale(1.3,1.3);
+  -webkit-transform:scale(1.3,1.3);
+  -moz-transform:scale(1.3,1.3);
+}
+link:focus{
+  outline:0 !important;
+  color:#f7bb97;
+  filter:brightness(150%);
+}

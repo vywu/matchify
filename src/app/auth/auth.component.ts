@@ -66,10 +66,13 @@ export class AuthComponent implements OnInit {
     this.userId=sessionStorage.getItem('username');
     return !(typeof this.userId=='undefined'||this.userId==null);
   }
-  greet(){
+  getId(){
 
-    return sessionStorage.getItem('clientid')+this.userId;
+    return sessionStorage.getItem('clientid');
   }
 
+  getUsername(){
+    return this.userId;
+  }
 
 }

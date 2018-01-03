@@ -1,4 +1,8 @@
+
 <h1 *ngIf="!isLoggedIn()">Matchify</h1>
-<a href="/login" *ngIf="!isLoggedIn()">Login</a>
-<h1 *ngIf="hasRetrievedName()">{{greet()}}</h1>
+<a class='login' href="/login" *ngIf="!isLoggedIn()">Login</a>
+<div *ngIf="hasRetrievedName()">
+<h1>Welcome {{getUsername()}}</h1>
+<h2>Your Unique Code Is {{getId()}}</h2>
+</div>
 

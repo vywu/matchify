@@ -1,0 +1,22 @@
+.main{
+  text-align: center;
+  color:whitesmoke;
+  height:100%;
+  width:100%;
+}
+.csshelper{
+  position: relative;
+  left: -50%;
+}
+app-auth{
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:50%;
+  right:0;
+  margin:auto;
+  height:30%;
+  width:100%;
+}
+
+
