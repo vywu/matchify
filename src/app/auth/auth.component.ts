@@ -64,7 +64,6 @@ export class AuthComponent implements OnInit {
 
   hasRetrievedName(){
     this.userId=sessionStorage.getItem('username');
-    console.log("HAS RETRIEVED USERNAME"+this.userId);
     return !(typeof this.userId=='undefined'||this.userId==null);
   }
   greet(){

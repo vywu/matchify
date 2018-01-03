@@ -110,7 +110,10 @@ io.on('connection',function(socket){
     });
     }
   });
-
+  socket.on('updateTrack',function(data){
+    console.log("RECEIVED UPDATE REQUEST FROM "+data.room+"NEW SONG NAME"+data.trackname);
+    io.to(data.room).emit('updateFromSubscribee',{trackname:data.trackname,trackid:data.trackid});
+  });
   // console.log(socket.handshake);
   count++;
 });

@@ -5,12 +5,15 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class SpotifyService {
 
-  constructor(private http:Http) { }
+  constructor(private http:Http) {
+    this.getUserId();
+  }
   apiUrl="https://api.spotify.com/v1/me";
   token=sessionStorage.getItem("accessToken");
 
   headers=new Headers({"Authorization":"Bearer "+this.token});
   userId:string="";
+
   getUsername(){
     console.log(this.token);
     var username:string;
@@ -22,7 +25,7 @@ export class SpotifyService {
   }
 
   getCurrentTrack(){
-    console.log("FROM SPOTIFY SERVICE. GET CURRENT TRACK CALLED");
+    // console.log("FROM SPOTIFY SERVICE. GET CURRENT TRACK CALLED");
     return this.http.get(this.apiUrl+'/player/currently-playing',{headers:this.headers}).map((response:Response)=>response.json());
   }
 
@@ -61,6 +64,7 @@ export class SpotifyService {
   }
 
   createPlaylist(name:string){
+    console.log('FROM SPOTIFY SERVICE CREATEPLAYLIST CALLED');
     this.headers.append("Content-Type","application/json");
 
     const body={name:name};

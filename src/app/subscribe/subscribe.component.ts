@@ -12,18 +12,20 @@ export class SubscribeComponent implements OnInit {
  socket;
  myId: string;
  subscribers:string[];
+ playlistid:string;
  public subscribed:boolean=false;
   constructor(private socketService:SocketService, private spotifyService: SpotifyService) {
   }
 
   ngOnInit() {
+    //initialize the local socket
     this.socket=this.socketService.getSocket();
-    //
+    //check if the subscription state of a user has changed(no one subscribes<=>someone subscribes)
     this.beingSubscribed().subscribe(data=>{
       if(data==true) {
         if (this.subscribed == false) {
           this.subscribed = true;
-          this.createSubscription();
+          this.updateSender(this.createSubscription());
         }
       }
       else if(this.subscribed==true){
@@ -31,16 +33,30 @@ export class SubscribeComponent implements OnInit {
         this.endSubscription();
       }
     });
-    //this.createSubscription();
+
   }
 
   subscribe(id){
     console.log("subscribe to "+id.value);
-    this.socket.emit('subscribe',{subscriberid:this.myId,subscribeeid:id.value})
+    this.spotifyService.createPlaylist("Listening with "+id.value).subscribe(data=>this.playlistid=data.id);
+    this.socket.emit('subscribe',{subscriberid:this.myId,subscribeeid:id.value});
+    const receiverObservable=new Observable(observer=>{
+      this.socket.on('updateFromSubscribee',function(data){
+        console.log('RECEIVED UPDATE FROM SUBSCRIBEE NEW SONG IS '+data.trackname);
+        observer.next(data.trackid);
+      });
+    });
+    receiverObservable.subscribe((data)=>{
+      let trackids=[];
+      trackids.push(data);
+      this.spotifyService.addTrackToPlaylist(this.playlistid,trackids);
+    });
   }
 
   unsubscribe(){
   }
+
+
 
   beingSubscribed(){
     const socketObservable=new Observable(observer=>{
@@ -62,11 +78,28 @@ export class SubscribeComponent implements OnInit {
     var id;
     console.log("CREATE SUB FLAG"+this.subscribed);
     console.log("Create Subs called");
+    //check if the track has been changed every 1 second
     const observable=Observable.timer(0,1000);
-    observable.switchMap(event=>this.spotifyService.getCurrentTrack())
-      .subscribe(
-      // console.log("SPOTIFY CALLED");
-      (data)=>console.log(data)
+    return observable.switchMap(event=>this.spotifyService.getCurrentTrack());
+
+  }
+
+  updateSender(subObservable){
+    let currentTrack='';
+    //subscribe to the observable
+    subObservable.subscribe(
+      (data)=>{
+        //if the track has been changed
+        if(data.item.uri!=currentTrack)
+        {
+          //update current track
+          currentTrack=data.item.uri;
+          console.log("From updatesender"+data.item.name+data.item.uri);
+          //send the new track to the back end
+          this.socket.emit('updateTrack',{room:sessionStorage.getItem('clientid'),trackname:data.item.name,trackid:data.item.uri});
+
+        }
+      }
     );
   }
 
